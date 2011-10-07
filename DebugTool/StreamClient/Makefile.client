@@ -1,0 +1,28 @@
+CC=gcc
+CFLAGS=-W -Wall
+LDFLAGS=
+EXEC=stream_client
+
+DEFINES := -D _DEBUG -D MINGW32
+
+INCLUDES := -I C:\OpenCV\cxcore\include -I C:\OpenCV\cv\include -I C:\OpenCV\otherlibs\highgui
+
+LIBS := -L C:\OpenCV\lib -lcxcore -lcv -lhighgui -lpthread -lwsock32
+
+all: $(EXEC)
+
+stream_client: stream_client.o
+	$(CC) -o $@ $^ $(LIBS)
+
+
+stream_client.o: stream_client.c def.h
+	$(CC) $(INCLUDES) $(DEFINES) -g -c $< -o $@
+
+#def.o: def.h
+#	$(CC) $(INCLUDES) $(DEFINES) -g -c $< -o $@
+
+clean:
+	rm*.o
+
+mrproper: clean
+	rm $(EXEC)

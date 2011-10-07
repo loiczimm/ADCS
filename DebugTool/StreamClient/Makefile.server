@@ -1,0 +1,5 @@
+gcc stream_server.c -o stream_server \
+      -I"C:\OpenCV\cxcore\include" \
+      -I"C:\OpenCV\cv\include" \
+      -I"C:\OpenCV\otherlibs\highgui" \
+      -L"C:\OpenCV\lib" -lcxcore -lcv -lhighgui -lpthread -lwsock32

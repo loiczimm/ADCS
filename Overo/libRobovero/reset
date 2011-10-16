@@ -1,0 +1,3 @@
+cd ../
+python IMU.py
+cd cDebug

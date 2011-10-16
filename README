@@ -1,0 +1,10 @@
+Bug list
+
+libRobovero C
+	can't lauch on its own
+
+Overo
+	cdc_acm driver not lauched correctly
+
+openOCD
+	checksum fail when flash

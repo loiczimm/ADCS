@@ -5,6 +5,7 @@ libRobovero C
 
 Overo
 	cdc_acm driver not lauched correctly
+		check with the udev rules -> can be the solution?
 
 openOCD
 	checksum fail when flash

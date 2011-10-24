@@ -127,7 +127,7 @@ I2CDevice compass;
 I2CDevice gyro;
 
 
-int twosComplement(char low_byte, char high_byte){
+int twosComplement(int8_t low_byte, int8_t high_byte){
 	return (((low_byte + (high_byte << 8))));
 }
 

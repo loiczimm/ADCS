@@ -11,7 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>ReCoSatV1</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="ReCoSat.qrc">
+    <normaloff>:/graphics/resources/logoSC.ico</normaloff>:/graphics/resources/logoSC.ico</iconset>
+  </property>
+  <property name="animated">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QMdiArea" name="mdiArea">
@@ -24,21 +31,27 @@
      </rect>
     </property>
    </widget>
-   <widget class="QLineEdit" name="AccLineEdit">
+   <widget class="QLineEdit" name="AccXLineEdit">
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>40</y>
-      <width>113</width>
+      <y>20</y>
+      <width>71</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="acceptDrops">
+     <bool>true</bool>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
    <widget class="QLabel" name="AccLabel">
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>40</y>
+      <y>20</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -59,8 +72,11 @@
     <property name="text">
      <string/>
     </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
    </widget>
-   <widget class="QLabel" name="AccLabel_2">
+   <widget class="QLabel" name="Connect2Label">
     <property name="geometry">
      <rect>
       <x>580</x>
@@ -71,6 +87,231 @@
     </property>
     <property name="text">
      <string>Connection string</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="MagLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>40</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Magnetometers</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="MagXLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>40</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="GyrLabel">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>60</y>
+      <width>81</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Gyroscopes</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="GyrXLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>60</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="AccYLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>20</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="MagYLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>40</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="GyrYLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>170</x>
+      <y>60</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="AccZLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>20</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="MagZLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>40</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="GyrZLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>60</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QDial" name="dial">
+    <property name="geometry">
+     <rect>
+      <x>356</x>
+      <y>20</y>
+      <width>50</width>
+      <height>64</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDial" name="dial_2">
+    <property name="geometry">
+     <rect>
+      <x>416</x>
+      <y>20</y>
+      <width>50</width>
+      <height>64</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDial" name="dial_3">
+    <property name="geometry">
+     <rect>
+      <x>476</x>
+      <y>20</y>
+      <width>50</width>
+      <height>64</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QSlider" name="horizontalSlider">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>33</y>
+      <width>160</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QSlider" name="horizontalSlider_2">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>53</y>
+      <width>160</width>
+      <height>19</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
+    </property>
+   </widget>
+   <widget class="QLabel" name="rollLabel">
+    <property name="geometry">
+     <rect>
+      <x>371</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Roll</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="pitchLabel">
+    <property name="geometry">
+     <rect>
+      <x>429</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pitch</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="yawLabel">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>10</y>
+      <width>30</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Yaw</string>
     </property>
    </widget>
   </widget>
@@ -110,6 +351,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="ReCoSat.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -19,6 +19,7 @@ public:
 private slots:
     //! Opens a dialog for a new connection
     void openConnectDialog();
+ //   void openAboutDialog();
 
 private:
     Ui::MainWindow *ui;

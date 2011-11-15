@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/graphics">
+        <file>resources/logoSC.ico</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,236 @@
+//Example application that outputs accelerometer, compass and gyro readings.
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <termios.h>
+#include <unistd.h>
+
+//#include "connect.h"
+#include "internals.h"
+#include "extras.h"
+#include "lpc_types.h"
+#include "utils.h"
+//from robovero.extras import Array, roboveroConfig
+//#include "lpc17xx_i2c.h"
+//from robovero.lpc17xx_i2c import I2C_M_SETUP_Type, I2C_MasterTransferData, \ I2C_TRANSFERT_OPT_Type
+
+//#include "lpc17xx_gpio.h"
+//from robovero.lpc17xx_gpio import GPIO_ReadValue
+//#include "LPC17xx.h"
+//from robovero.LPC17xx import LPC_I2C0
+//#include "lpc_types.h"
+
+//from robovero.lpc_types import Status
+//#include <time.h>
+//import time
+
+#define ACCEL_CTRL_REG1 0x20
+#define ACCEL_X_LOW 0x28
+#define ACCEL_X_HIGH 0x29
+#define ACCEL_Y_LOW 0x2A
+#define ACCEL_Y_HIGH 0x2B
+#define ACCEL_Z_LOW 0x2C
+#define ACCEL_Z_HIGH 0x2D
+
+#define COMPASS_MR_REG 0x02
+#define COMPASS_X_HIGH 0x03
+#define COMPASS_X_LOW 0x04
+#define COMPASS_Y_HIGH 0x05
+#define COMPASS_Y_LOW 0x06
+#define COMPASS_Z_HIGH 0x07
+#define COMPASS_Z_LOW 0x08
+
+#define GYRO_CTRL_REG1 0x20
+#define GYRO_CTRL_REG2 0x21
+#define GYRO_CTRL_REG3 0x22
+#define GYRO_CTRL_REG4 0x23
+#define GYRO_CTRL_REG5 0x24
+#define GYRO_CTRL_REG 0x27
+#define GYRO_X_LOW 0x28
+#define GYRO_X_HIGH 0x29
+#define GYRO_Y_LOW 0x2A
+#define GYRO_Y_HIGH 0x2B
+#define GYRO_Z_LOW 0x2C
+#define GYRO_Z_HIGH 0x2D
+#define GYRO_FIFO_CTRL_REG 0x2E
+
+
+#define _GYRO
+
+static int fd;
+char* messageRead;
+
+class I2CDevice{
+	public:
+		void init(int address){
+			robocaller((char*)"",(char*)"void");
+			robocaller((char*)"promptOff",(char*)"void");
+
+			ptr = I2C_M_SETUP_Type_malloc();
+
+			tx_ptr = roboveroMalloc(2);
+			rx_ptr = roboveroMalloc(1);
+
+			I2C_M_SETUP_Type_sl_addr7bit(ptr, address);
+
+			I2C_M_SETUP_Type_tx_data(ptr, tx_ptr);
+
+			I2C_M_SETUP_Type_retransmissions_max(ptr, 3);
+		}
+
+		int readReg(uint8_t reg, int conf){
+			deref(tx_ptr, 1, reg);
+
+			if(conf){
+				I2C_M_SETUP_Type_tx_length(ptr, 1);
+
+				I2C_M_SETUP_Type_rx_data(ptr, tx_ptr+16);
+
+				I2C_M_SETUP_Type_rx_length(ptr, 1);
+			}
+
+			robocaller((char*)"I2C_MasterTransferData 4001C000",(char*)"void", ptr, 0);
+
+			while(!read(fd,messageRead,10));
+
+			int ret = deref(tx_ptr+16, 1);
+
+			if(ret == 0)
+                		return 0;
+		        return ret;
+		}
+
+		int writeReg(uint8_t reg,uint8_t value){
+			char* message;
+			message = (char*)malloc(10*sizeof(char));
+
+			deref(tx_ptr, 1, reg);
+
+			deref(tx_ptr + 1, 1, value);
+
+			I2C_M_SETUP_Type_tx_length(ptr,2);
+
+			I2C_M_SETUP_Type_rx_data(ptr, 0);
+			
+			I2C_M_SETUP_Type_rx_length(ptr, 0);
+
+			robocaller((char*)"I2C_MasterTransferData 4001C000", (char*)"void", ptr, 0);		
+			while(!read(fd, message, 10));
+
+			int ret = readReg(reg,1);
+			free(message);
+        		if(ret!= value){
+                		printf("I2C Verification Error\n");
+                		return 0;
+		        }
+		        return 0;
+		}
+		
+		void release(void){
+			robocaller((char*)"free",(char*)"void", tx_ptr);
+			robocaller((char*)"free",(char*)"void", rx_ptr);
+			robocaller((char*)"free",(char*)"void", ptr);
+		}
+
+
+	private:
+		I2C_M_SETUP_Type config;
+		uint32_t ptr, tx_ptr, rx_ptr;
+	        uint8_t tx_data[2];
+        	uint8_t rx_data[1];
+};
+
+
+int twosComplement(char low_byte, char high_byte){
+	return (((low_byte + (high_byte << 8))));
+}
+
+
+int main(){
+//start to connect to serial port
+	fd = connect();
+	if(fd == -1)
+	//if(connect((char*)"/dev/ttyACM0") == -1)
+		return 0;
+	messageRead = (char*)malloc(10*sizeof(char));
+	roboveroConfig();
+
+//now create the device
+	I2CDevice accelerometer;
+	accelerometer.init(0x18);
+	accelerometer.writeReg(ACCEL_CTRL_REG1, 0x27);
+
+
+//accelerometer.release();
+//while(1);
+	int x, y, z;
+	int counter = 0;
+	while(1){
+#ifdef _HEART
+		printf("enable heartbeat\n");
+		heartbeatOn();		
+		sleep(2);
+		printf("disable heartbeat\n");
+		heartbeatOff();
+		sleep(2);
+#endif
+#ifdef _GYRO
+		counter++;
+		//printf("----------------\n");
+		x = twosComplement(accelerometer.readReg(ACCEL_X_LOW,0),accelerometer.readReg(ACCEL_X_HIGH,0));
+		y = twosComplement(accelerometer.readReg(ACCEL_Y_LOW,0),accelerometer.readReg(ACCEL_Y_HIGH,0));
+		z = twosComplement(accelerometer.readReg(ACCEL_Z_LOW,0),accelerometer.readReg(ACCEL_Z_HIGH,0));
+//		if(counter == 40){
+			printf("x: %d, y: %d,z: %d\n",x,y,z);
+//			counter = 0;
+//		}
+//		sleep(2);		
+#endif
+	}
+	
+	disconnect();
+	//# configure accelerometer
+/*	I2CDevice accelerometer;
+	init(accelerometer, 0x18);
+	writeReg(accelerometer, ACCEL_CTRL_REG1, 0x27);
+
+	//# configure compass
+	I2CDevice compass;
+	init(compass, 0x1E);
+	writeReg(compass, COMPASS_MR_REG, 0);//	# continuous measurement mode
+
+	//# configure the gyro
+	//# see L3G4200D Application Note for initialization procedure
+	I2CDevice gyro;
+	init(gyro, 0x68);
+	writeReg(gyro, GYRO_CTRL_REG3, 0x08);// # enable DRDY
+	writeReg(gyro, GYRO_CTRL_REG4, 0x80);// # enable block data read mode
+	writeReg(gyro, GYRO_CTRL_REG1, 0x09);//	# normal mode, enable x-axis
+*/
+	//main loop
+	while(0){
+
+
+//		printf("a [x, y, z]:%d, %d, %d\n",
+//		twosComplement(readReg(accelerometer, ACCEL_X_LOW), readReg(accelerometer, ACCEL_X_HIGH)),
+//		twosComplement(readReg(accelerometer, ACCEL_Y_LOW), readReg(accelerometer, ACCEL_Y_HIGH)),
+//		twosComplement(readReg(accelerometer, ACCEL_Z_LOW), readReg(accelerometer, ACCEL_Z_HIGH)));
+
+/*		printf("c [x, y, z]:%d, %d, %d\n ",
+		twosComplement(compass.readReg(COMPASS_X_LOW), compass.readReg(COMPASS_X_HIGH)),
+		twosComplement(compass.readReg(COMPASS_Y_LOW), compass.readReg(COMPASS_Y_HIGH)),
+		twosComplement(compass.readReg(COMPASS_Z_LOW), compass.readReg(COMPASS_Z_HIGH)));
+		
+		printf("g [x, y, z]:%d, %d, %d\n ",
+		twosComplement(gyro.readReg(GYRO_X_LOW), gyro.readReg(GYRO_X_HIGH)),
+		twosComplement(gyro.readReg(GYRO_Y_LOW), gyro.readReg(GYRO_Y_HIGH)),
+		twosComplement(gyro.readReg(GYRO_Z_LOW), gyro.readReg(GYRO_Z_HIGH)));
+*/	
+		printf("------------------------------------\n");
+	}
+}
+//	time.sleep(1)
+
+

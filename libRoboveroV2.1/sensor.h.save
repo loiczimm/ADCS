@@ -1,0 +1,17 @@
+#ifndef _SENSOR_H
+#define _SENSOR_H
+
+
+typedef struct{
+	//accelerometer
+	float accX;
+	float accYM;
+
+}sensor_Stat;
+int sensor_init();
+
+int sensor_step();
+
+int sensor_stop();
+
+#endif

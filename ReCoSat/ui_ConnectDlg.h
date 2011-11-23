@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ConnectDlg.ui'
 **
-** Created: Tue 15. Nov 11:34:11 2011
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Tue Nov 22 19:19:04 2011
+**      by: Qt User Interface Compiler version 4.8.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/

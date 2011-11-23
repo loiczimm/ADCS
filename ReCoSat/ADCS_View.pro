@@ -13,15 +13,17 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     widget/core/connectDialog.cpp \
-    widget/core/aboutDialog.cpp
+    adcs.cpp
 
 HEADERS  += mainwindow.h \
     widget/core/connectDialog.h \
-    widget/core/aboutDialog.h
+    adcs.h
 
 FORMS    += mainwindow.ui \
-    forms/ConnectDlg.ui \
-    forms/AboutDlg.ui
+    forms/ConnectDlg.ui
 
-RESOURCES += \
-    ReCoSat.qrc
+
+
+
+
+

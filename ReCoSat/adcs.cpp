@@ -44,6 +44,15 @@ void adcs::computeQuaternions()
 
 
 
+
+
+
+
+
+
+
+
+
 /************* SET FUNCTIONS *************/
 
 // Set Roll
@@ -79,7 +88,38 @@ void adcs::setControllerMode(short mode)
     this->controllerMode = mode;
 }
 
+// Set Current Quaternions
+void adcs::setCurrentQuaternions(double q0, double q1, double q2, double q3)
+{
+    this->currentQuaternions[0] = q0;
+    this->currentQuaternions[1] = q1;
+    this->currentQuaternions[2] = q2;
+    this->currentQuaternions[3] = q3;
+}
 
+// Set Magnetometer Values
+void adcs::setMagnetometer(double arg1, double arg2, double arg3)
+{
+    this->magnetometer[0] = arg1;
+    this->magnetometer[1] = arg2;
+    this->magnetometer[2] = arg3;
+}
+
+// Set Gyroscope Values
+void adcs::setGyroscope(double arg1, double arg2, double arg3)
+{
+    this->gyroscope[0] = arg1;
+    this->gyroscope[1] = arg2;
+    this->gyroscope[2] = arg3;
+}
+
+// Set Accelerometer Values
+void adcs::setAccelerometer(double arg1, double arg2, double arg3)
+{
+    this->accelerometer[0] = arg1/16384;
+    this->accelerometer[1] = arg2/16384;
+    this->accelerometer[2] = arg3/16384;
+}
 
 
 
@@ -109,6 +149,30 @@ double adcs::getYaw()
 double adcs::getQuaternion(int n)
 {
     return this->quaternions[n];
+}
+
+// Get Current Quaternion n
+double adcs::getCurrentQuaternion(int n)
+{
+    return this->currentQuaternions[n];
+}
+
+// Get Magnetometer Value along the n-axis
+double adcs::getMagnetometer(int n)
+{
+    return this->magnetometer[n];
+}
+
+// Get Gyroscope Value along the n-axis
+double adcs::getGyroscope(int n)
+{
+    return this->gyroscope[n];
+}
+
+// Get Accelerometer Value along the n-axis
+double adcs::getAccelerometer(int n)
+{
+    return this->accelerometer[n];
 }
 
 // Get Simulation State

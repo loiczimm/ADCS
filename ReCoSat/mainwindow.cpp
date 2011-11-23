@@ -3,19 +3,20 @@
 #include "adcs.h"
 #include "widget/core/ConnectDialog.h"
 
-
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <pthread.h>
 
+#define WIN_32
 
 // Define libraries for communication protocol (sockets, etc.)
-#ifdef MINGW32
+#ifdef WIN_32
    //#include <winsock.h>
    #include <winsock2.h>
 #else
-  #include <netinet/in.h>
+   #include <netinet/in.h>
    #include <sys/socket.h>
    #include <arpa/inet.h>
 #endif
@@ -39,8 +40,8 @@ void  quit();
 
 int       is_data_ready = 0;
 int       sock;
-char*     server_ip = "10.0.0.133";
-int       server_port = 8888;
+char*     server_ip;// = "192.168.1.102";
+int       server_port;// = 8888;
 
 
 int twoComplement(uint8_t low, int8_t high);
@@ -52,10 +53,6 @@ int twoComplement(uint8_t low, int8_t high);
 
 
 //******************************************
-
-
-
-
 
 
 
@@ -72,15 +69,13 @@ MainWindow::MainWindow(QWidget *parent) :    QMainWindow(parent),
     // Initialise display of quaternion values
     this->updateQuaternions();
 
-
+    server_ip = (char*)malloc(20*sizeof(char));
 
     //timer_ = new QBasicTimer();
     //timer_->start(500,this);
     timer = new QTimer(this);
-
     timer->setSingleShot(false);
     timer->start(50);
-
     connect(timer, SIGNAL(timeout()), this, SLOT(updateCaption()));
 
     // Show fullscreen or maximized based on current settings
@@ -103,6 +98,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::updateCaption()
 {
+    //   quit();
     //ui->cur_q0_spinbox->setValue(platform->getCurrentQuaternion(0));
     //ui->cur_q1_spinbox->setValue(platform->getCurrentQuaternion(1));
     //ui->cur_q2_spinbox->setValue(platform->getCurrentQuaternion(2));
@@ -111,8 +107,12 @@ void MainWindow::updateCaption()
     ui->accelX_spinbox->setValue(platform->getAccelerometer(0));
     ui->accelY_spinbox->setValue(platform->getAccelerometer(1));
     ui->accelZ_spinbox->setValue(platform->getAccelerometer(2));
+    ui->progressBarAccX->setValue(abs(1000*platform->getAccelerometer(0)));
+    ui->progressBarAccY->setValue(abs(1000*platform->getAccelerometer(1)));
+    ui->progressBarAccZ->setValue(abs(1000*platform->getAccelerometer(2)));
 
-    //ui->gyroX_spinbox->setValue(platform->getGyroscope(0));
+
+    ui->gyroX_spinbox->setValue(platform->getGyroscope(0));
     //ui->gyroY_spinbox->setValue(platform->getGyroscope(1));
     //ui->gyroZ_spinbox->setValue(platform->getGyroscope(2));
 
@@ -144,11 +144,11 @@ void MainWindow::openConnectDialog()
 {
     ConnectDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted){
-        ui->Connect2->setText(dialog.connectionTarget());;
+        ui->Connect2->setText(dialog.connectionTarget());
+        int arg1, arg2, arg3, arg4;
+        sscanf(dialog.connectionTarget().toStdString().c_str(),"tcp:%d.%d.%d.%d;port=%d",&arg1, &arg2, &arg3, &arg4, &server_port);
+        sprintf(server_ip,"%d.%d.%d.%d",arg1, arg2, arg3, arg4);
 
-
-        // tcp:10.0.0.133;port=8888
-        //char buffer[100];
 
        // for(i=0)
 
@@ -158,7 +158,7 @@ void MainWindow::openConnectDialog()
 
         // run the streaming client as a separate thread
         if (pthread_create(&thread_c, NULL, streamClient, NULL)) {
-            quit();
+         //   quit();
         }
 
         /*fprintf(stdout, "Press 'q' to quit.\n\n");
@@ -199,17 +199,17 @@ void* streamClient(void* arg)
     pthread_setcancelstate(PTHREAD_CANCEL_ENABLE, NULL);
     pthread_setcanceltype(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
 
-    /*#ifdef MINGW32
+    #ifdef WIN_32
     WSADATA wsadata;
     if (WSAStartup(MAKEWORD(1,1), &wsadata) == SOCKET_ERROR) {
-    printf("Error creating socket.");
-    return;
+        printf("Error creating socket.");
+        return 0;
     }
-    #endif*/
+    #endif
 
     // create socket
     if ((sock = socket(PF_INET,SOCK_STREAM, 0)) < 0) {
-        quit();
+    //    quit();
     }
 
     // setup server parameters
@@ -220,7 +220,7 @@ void* streamClient(void* arg)
 
     // connect to server
     if (connect(sock, (struct sockaddr*)&server, sizeof(server)) < 0) {
-        quit();
+     //   quit();
     }
 
     char buffer[6];
@@ -268,7 +268,7 @@ void* streamClient(void* arg)
 
 
         if ((bytes = recv(sock, buffer, sizeof(buffer) , 0)) == -1) {
-            quit();
+          //  quit();
         }
 
         i = (double) twoComplement(buffer[0],buffer[1]);
@@ -322,13 +322,6 @@ void quit()
     //exit(retval);
     exit(0);
 }
-
-
-
-
-
-
-
 
 
 

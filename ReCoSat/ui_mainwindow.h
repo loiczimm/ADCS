@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Nov 22 19:45:50 2011
-**      by: Qt User Interface Compiler version 4.8.0
+** Created: Wed 23. Nov 21:29:23 2011
+**      by: Qt User Interface Compiler version 4.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -20,6 +20,7 @@
 #include <QtGui/QGraphicsView>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLCDNumber>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QMainWindow>
@@ -83,6 +84,9 @@ public:
     QDoubleSpinBox *accelX_spinbox;
     QDoubleSpinBox *accelY_spinbox;
     QDoubleSpinBox *accelZ_spinbox;
+    QProgressBar *progressBarAccX;
+    QProgressBar *progressBarAccY;
+    QProgressBar *progressBarAccZ;
     QGroupBox *gyroscopeBox;
     QLabel *gyroX_label;
     QLabel *gyroY_label;
@@ -105,6 +109,8 @@ public:
     QLabel *label_2;
     QLabel *label_3;
     QGraphicsView *graphicsView;
+    QLCDNumber *lcdNumber;
+    QLabel *state_label;
     QMenuBar *menuBar;
     QMenu *menuConnection;
     QMenu *menuAbout;
@@ -115,6 +121,9 @@ public:
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
         MainWindow->resize(800, 539);
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/graphic/logoSC.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        MainWindow->setWindowIcon(icon);
         MainWindow->setToolButtonStyle(Qt::ToolButtonFollowStyle);
         connectAction = new QAction(MainWindow);
         connectAction->setObjectName(QString::fromUtf8("connectAction"));
@@ -342,6 +351,30 @@ public:
         accelZ_spinbox->setDecimals(4);
         accelZ_spinbox->setMinimum(-2);
         accelZ_spinbox->setMaximum(2);
+        progressBarAccX = new QProgressBar(accelerometerBox);
+        progressBarAccX->setObjectName(QString::fromUtf8("progressBarAccX"));
+        progressBarAccX->setGeometry(QRect(40, 70, 101, 16));
+        progressBarAccX->setMaximum(1000);
+        progressBarAccX->setValue(0);
+        progressBarAccX->setTextVisible(false);
+        progressBarAccX->setOrientation(Qt::Horizontal);
+        progressBarAccX->setInvertedAppearance(false);
+        progressBarAccY = new QProgressBar(accelerometerBox);
+        progressBarAccY->setObjectName(QString::fromUtf8("progressBarAccY"));
+        progressBarAccY->setGeometry(QRect(40, 120, 101, 16));
+        progressBarAccY->setMaximum(1000);
+        progressBarAccY->setValue(0);
+        progressBarAccY->setTextVisible(false);
+        progressBarAccY->setOrientation(Qt::Horizontal);
+        progressBarAccY->setInvertedAppearance(false);
+        progressBarAccZ = new QProgressBar(accelerometerBox);
+        progressBarAccZ->setObjectName(QString::fromUtf8("progressBarAccZ"));
+        progressBarAccZ->setGeometry(QRect(40, 170, 101, 16));
+        progressBarAccZ->setMaximum(1000);
+        progressBarAccZ->setValue(0);
+        progressBarAccZ->setTextVisible(false);
+        progressBarAccZ->setOrientation(Qt::Horizontal);
+        progressBarAccZ->setInvertedAppearance(false);
         gyroscopeBox = new QGroupBox(sensorReadingsTab);
         gyroscopeBox->setObjectName(QString::fromUtf8("gyroscopeBox"));
         gyroscopeBox->setGeometry(QRect(380, 210, 161, 191));
@@ -402,6 +435,9 @@ public:
         progressBar = new QProgressBar(groupBox);
         progressBar->setObjectName(QString::fromUtf8("progressBar"));
         progressBar->setGeometry(QRect(20, 40, 21, 111));
+        progressBar->setContextMenuPolicy(Qt::DefaultContextMenu);
+        progressBar->setLayoutDirection(Qt::LeftToRight);
+        progressBar->setAutoFillBackground(false);
         progressBar->setValue(24);
         progressBar->setOrientation(Qt::Vertical);
         progressBar->setInvertedAppearance(false);
@@ -430,11 +466,17 @@ public:
         graphicsView = new QGraphicsView(sensorReadingsTab);
         graphicsView->setObjectName(QString::fromUtf8("graphicsView"));
         graphicsView->setGeometry(QRect(30, 30, 321, 211));
+        lcdNumber = new QLCDNumber(sensorReadingsTab);
+        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
+        lcdNumber->setGeometry(QRect(80, 340, 64, 23));
         tabWidget->addTab(sensorReadingsTab, QString());
+        state_label = new QLabel(centralWidget);
+        state_label->setObjectName(QString::fromUtf8("state_label"));
+        state_label->setGeometry(QRect(230, 20, 141, 16));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 800, 22));
+        menuBar->setGeometry(QRect(0, 0, 800, 21));
         menuConnection = new QMenu(menuBar);
         menuConnection->setObjectName(QString::fromUtf8("menuConnection"));
         menuAbout = new QMenu(menuBar);
@@ -493,6 +535,9 @@ public:
         accelX_label->setText(QApplication::translate("MainWindow", "x", 0, QApplication::UnicodeUTF8));
         accelY_label->setText(QApplication::translate("MainWindow", "y", 0, QApplication::UnicodeUTF8));
         accelZ_label->setText(QApplication::translate("MainWindow", "z", 0, QApplication::UnicodeUTF8));
+        progressBarAccX->setFormat(QApplication::translate("MainWindow", "%p%", 0, QApplication::UnicodeUTF8));
+        progressBarAccY->setFormat(QApplication::translate("MainWindow", "%p%", 0, QApplication::UnicodeUTF8));
+        progressBarAccZ->setFormat(QApplication::translate("MainWindow", "%p%", 0, QApplication::UnicodeUTF8));
         gyroscopeBox->setTitle(QApplication::translate("MainWindow", "Gyroscopes", 0, QApplication::UnicodeUTF8));
         gyroX_label->setText(QApplication::translate("MainWindow", "x", 0, QApplication::UnicodeUTF8));
         gyroY_label->setText(QApplication::translate("MainWindow", "y", 0, QApplication::UnicodeUTF8));
@@ -502,11 +547,15 @@ public:
         label_8->setText(QApplication::translate("MainWindow", "y", 0, QApplication::UnicodeUTF8));
         label_9->setText(QApplication::translate("MainWindow", "z", 0, QApplication::UnicodeUTF8));
         groupBox->setTitle(QApplication::translate("MainWindow", "Wheel speeds", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        progressBar->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
         progressBar->setFormat(QApplication::translate("MainWindow", "%p%", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("MainWindow", "w1", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("MainWindow", "w2", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("MainWindow", "w3", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(sensorReadingsTab), QApplication::translate("MainWindow", "Sensor Readings", 0, QApplication::UnicodeUTF8));
+        state_label->setText(QApplication::translate("MainWindow", "STATE: Not connected", 0, QApplication::UnicodeUTF8));
         menuConnection->setTitle(QApplication::translate("MainWindow", "Connection", 0, QApplication::UnicodeUTF8));
         menuAbout->setTitle(QApplication::translate("MainWindow", "About", 0, QApplication::UnicodeUTF8));
         menuWindow->setTitle(QApplication::translate("MainWindow", "Window", 0, QApplication::UnicodeUTF8));

@@ -22,8 +22,5 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui \
     forms/ConnectDlg.ui
 
-
-
-
-
-
+RESOURCES += \
+    graphics.qrc

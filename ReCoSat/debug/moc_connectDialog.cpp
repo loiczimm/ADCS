@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'connectDialog.h'
 **
-** Created: Mon 7. Nov 14:16:34 2011
+** Created: Wed 23. Nov 18:28:05 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.0)
 **
 ** WARNING! All changes made in this file will be lost!

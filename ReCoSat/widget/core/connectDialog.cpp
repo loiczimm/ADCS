@@ -31,6 +31,7 @@
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QDirIterator>
+#include <QString>
 
 #include <map>
 #include <string>
@@ -66,8 +67,17 @@ ConnectDialog::ConnectDialog(QWidget * parent) : QDialog(parent)
         }*/
 
         //set to common values
-        ui_.tcpAddressEdit->setText("10.0.0.133");
-        ui_.tcpPortEdit->setText("8888");
+        //read value from file
+        FILE* in;
+        int arg1, arg2, arg3, arg4, s_port;
+        char* s_ip;
+        s_ip = (char*)malloc(100*sizeof(char));
+        in = fopen("login","r");
+        fscanf(in,"tcp:%d.%d.%d.%d;port=%d",&arg1, &arg2, &arg3, &arg4, &s_port);
+        sprintf(s_ip,"%d.%d.%d.%d",arg1, arg2, arg3, arg4);
+        ui_.tcpAddressEdit->setText(s_ip);
+        ui_.tcpPortEdit->setText(QString::number(s_port));
+        fclose(in);
 
         // read previous settings
         QSettings settings;
@@ -146,6 +156,10 @@ void ConnectDialog::saveAsDefault()
         settings.beginGroup("connectDlg");
         saveToSettings(settings);
         settings.endGroup();
+        FILE *out;
+        out = fopen("login","w");
+        fprintf(out,connectionTarget().toStdString().c_str());
+        fclose(out);
 }
 
 /*!

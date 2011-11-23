@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Mon 7. Nov 14:16:32 2011
+** Created: Wed 23. Nov 18:28:04 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,12 +32,34 @@ static const uint qt_meta_data_MainWindow[] = {
 
  // slots: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x08,
+      32,   11,   11,   11, 0x08,
+      67,   62,   11,   11, 0x08,
+     104,   62,   11,   11, 0x08,
+     142,   62,   11,   11, 0x08,
+     184,  178,   11,   11, 0x08,
+     215,  178,   11,   11, 0x08,
+     247,  178,   11,   11, 0x08,
+     277,   11,   11,   11, 0x08,
+     297,   11,   11,   11, 0x08,
+     339,   11,   11,   11, 0x08,
+     379,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0openConnectDialog()\0"
+    "on_simulationButton_clicked()\0arg1\0"
+    "on_roll_spinbox_valueChanged(double)\0"
+    "on_pitch_spinbox_valueChanged(double)\0"
+    "on_yaw_spinbox_valueChanged(double)\0"
+    "value\0on_roll_dial_valueChanged(int)\0"
+    "on_pitch_dial_valueChanged(int)\0"
+    "on_yaw_dial_valueChanged(int)\0"
+    "updateQuaternions()\0"
+    "on_coarseAlignment_radiobutton_released()\0"
+    "on_fineAlignment_radiobutton_released()\0"
+    "updateCaption()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -70,9 +92,20 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: openConnectDialog(); break;
+        case 1: on_simulationButton_clicked(); break;
+        case 2: on_roll_spinbox_valueChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 3: on_pitch_spinbox_valueChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 4: on_yaw_spinbox_valueChanged((*reinterpret_cast< double(*)>(_a[1]))); break;
+        case 5: on_roll_dial_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: on_pitch_dial_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: on_yaw_dial_valueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 8: updateQuaternions(); break;
+        case 9: on_coarseAlignment_radiobutton_released(); break;
+        case 10: on_fineAlignment_radiobutton_released(); break;
+        case 11: updateCaption(); break;
         default: ;
         }
-        _id -= 1;
+        _id -= 12;
     }
     return _id;
 }

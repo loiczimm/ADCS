@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QBasicTimer>
+#include <QTimerEvent>
+#include <QTimer>
 
 
 namespace Ui {
@@ -20,10 +23,8 @@ public:
 
 private slots:
 
-
     // Opens a dialog for a new connection
     void openConnectDialog();
-
 
     void on_simulationButton_clicked();
 
@@ -37,13 +38,21 @@ private slots:
 
     void updateQuaternions();
 
-
     void on_coarseAlignment_radiobutton_released();
 
     void on_fineAlignment_radiobutton_released();
 
+    void updateCaption();
+
+
+
 private:
     Ui::MainWindow *ui;
+    QBasicTimer * timer_; //TEMP
+
+
+protected:
+    void timerEvent(QTimerEvent *);
 
 
 

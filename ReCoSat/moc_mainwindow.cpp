@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Nov 17 15:29:55 2011
+** Created: Tue Nov 22 19:19:07 2011
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      11,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -42,6 +42,7 @@ static const uint qt_meta_data_MainWindow[] = {
      277,   11,   11,   11, 0x08,
      297,   11,   11,   11, 0x08,
      339,   11,   11,   11, 0x08,
+     379,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -58,6 +59,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "updateQuaternions()\0"
     "on_coarseAlignment_radiobutton_released()\0"
     "on_fineAlignment_radiobutton_released()\0"
+    "updateCaption()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -77,6 +79,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 8: _t->updateQuaternions(); break;
         case 9: _t->on_coarseAlignment_radiobutton_released(); break;
         case 10: _t->on_fineAlignment_radiobutton_released(); break;
+        case 11: _t->updateCaption(); break;
         default: ;
         }
     }
@@ -114,9 +117,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 11)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 11;
+        _id -= 12;
     }
     return _id;
 }

@@ -28,13 +28,22 @@ public:
     void setYaw(double yaw);
     void setSimulationState(short state);
     void setControllerMode(short mode);
+    void setCurrentQuaternions(double q0, double q1, double q2, double q3);
+    void setMagnetometer(double arg1, double arg2, double arg3);
+    void setGyroscope(double arg1, double arg2, double arg3);
+    void setAccelerometer(double arg1, double arg2, double arg3);
 
     double getRoll();
     double getPitch();
     double getYaw();
     double getQuaternion(int n);
+    double getCurrentQuaternion(int n);
+    double getMagnetometer(int n);
+    double getGyroscope(int n);
+    double getAccelerometer(int n);
     short getSimulationState();
     short getControllerMode();
+
 
 
 
@@ -46,6 +55,11 @@ public:
     short simulationState;
     short controllerMode;
     double quaternions[4];
+    double currentQuaternions[4];
+
+    double magnetometer[3];
+    double gyroscope[3];
+    double accelerometer[3];
 
 
 
